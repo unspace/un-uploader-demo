@@ -1,0 +1,14 @@
+<h1>
+  Images
+</h1>
+
+<h3> Image list </h3>
+<ul>
+  {{#each image in model}}
+    <li>{{image.name}}</li>
+  {{/each}}
+</ul>
+
+<button {{action 'upload'}}>
+  Upload
+</button>
