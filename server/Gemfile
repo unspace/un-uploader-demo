@@ -2,8 +2,22 @@ source 'https://rubygems.org'
 
 gem 'rails',      '4.1.1'
 gem 'pg'
+gem 'kaminari'
+gem 'sidekiq'
+gem 'fog'
+gem 'pusher'
+gem 'mini_magick'
+gem 'puma'
+
+group :development do
   gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+  gem 'propro'
+  gem 'spring'
+end
 
 group :test do
   gem 'rspec-rails'
+  gem 'rspec-sidekiq'
 end
