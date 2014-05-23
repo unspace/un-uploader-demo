@@ -10,6 +10,7 @@
 # Ignore configs
 /config/database.yml
 /config/secrets.yml
+/Vagrantfile
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
