@@ -58,3 +58,13 @@ task :check_write_permissions do
     end
   end
 end
+
+desc "build and copy ember-cli app"
+task :build_ember_cli do
+  run_locally do
+    within '../client' do
+      execute 'node_modules/ember-cli/bin/ember', 'build', "--environment #{fetch(:rails_env)}"
+      execute 'cp', '-rv', 'dist/*', '../server/public/'
+    end
+  end
+end
