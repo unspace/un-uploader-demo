@@ -24,6 +24,8 @@
     "loom-generators-ember-appkit": "^1.1.1",
     "express": "^4.1.1",
     "body-parser": "^1.2.0",
+    "broccoli-fingerprint": "^0.0.3",
+    "broccoli-replace": "^0.1.6",
     "glob": "^3.2.9"
   }
 }
