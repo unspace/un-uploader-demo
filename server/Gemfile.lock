@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rails-api/active_model_serializers.git
+  revision: 2e31a141252a37f75cb5dc10e96d3975f1046085
+  specs:
+    active_model_serializers (0.9.0.alpha1)
+      activemodel (>= 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -180,6 +187,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers!
   capistrano-bundler
   capistrano-rails
   capistrano-rvm

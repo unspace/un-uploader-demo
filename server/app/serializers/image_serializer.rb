@@ -1,0 +1,2 @@
+class ImageSerializer < ApplicationSerializer
+end
