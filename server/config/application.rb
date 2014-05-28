@@ -11,6 +11,7 @@ Bundler.require(*Rails.groups)
 module UploadServer
   class Application < Rails::Application
     require 'upload_server/api_constraint'
+    require 'upload_server/upload'
 
     config.generators do |g|
       g.assets false
