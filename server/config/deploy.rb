@@ -73,7 +73,7 @@ task :build_ember_cli do
       execute 'node_modules/ember-cli/bin/ember', 'build', "--environment #{fetch(:rails_env)}"
       execute 'cp', '-rv', 'dist/*', '../server/public/'
       execute "git add ../server/public"
-      execute "git commit -m 'updated ember app'"
+      execute "git commit --allow-empty -m 'updated ember app'"
     end
   end
 end
