@@ -8,7 +8,7 @@ describe 'Images API' do
       create_image(state: Image.states[:processing])
     ]
 
-    get '/images'
+    get '/api/images'
 
     expect(response).to be_success
     expect(json[:images].length).to eq 2
@@ -21,7 +21,7 @@ describe 'Images API' do
       create_image
     ]
 
-    get "/images/#{images[0].id}"
+    get "/api/images/#{images[0].id}"
 
     expect(response).to be_success
     expect(json[:image][:id]).to eq images[0].id
