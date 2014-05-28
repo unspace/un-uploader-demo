@@ -28,24 +28,24 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      sudo "service puma restart app=#{current_path}"
-      sudo "service sidekiq restart app=#{current_path} index=0"
+      sudo "/sbin/restart puma app=#{current_path}"
+      sudo "/sbin/restart sidekiq app=#{current_path} index=0"
     end
   end
 
   desc 'Stop application'
   task :stop do
     on roles(:app), in: :sequence, wait: 1 do
-      sudo "service puma stop app=#{current_path}"
-      sudo "service sidekiq stop app=#{current_path} index=0"
+      sudo "/sbin/stop puma app=#{current_path}"
+      sudo "/sbin/stop sidekiq app=#{current_path} index=0"
     end
   end
 
   desc 'Start application'
   task :start do
     on roles(:app), in: :sequence, wait: 1 do
-      sudo "service puma start app=#{current_path}"
-      sudo "service sidekiq start app=#{current_path} index=0"
+      sudo "/sbin/start puma app=#{current_path}"
+      sudo "/sbin/start sidekiq app=#{current_path} index=0"
     end
   end
 
