@@ -66,9 +66,7 @@ end
 desc "build, copy  and commit ember-cli app"
 task :build_ember_cli do
   run_locally do
-    execute "git rm --ignore-unmatch public/index.html"
-    execute "git rm --ignore-unmatch public/assets/*.js"
-    execute "git rm --ignore-unmatch public/assets/*.css"
+    execute "git rm --ignore-unmatch public/index.html public/assets/*.js public/assets/*.css"
     within '../client' do
       execute 'node_modules/ember-cli/bin/ember', 'build', "--environment #{fetch(:rails_env)}"
       execute 'cp', '-rv', 'dist/*', '../server/public/'
