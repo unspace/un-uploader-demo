@@ -4,6 +4,10 @@ lock '3.2.1'
 set :application, 'un-uploader-demo'
 set :repo_url, 'git@github.com:unspace/un-uploader-demo.git'
 
+# Set up a strategy to deploy only a project directory (not the whole repo)
+set :git_strategy, RemoteCacheWithProjectRootStrategy
+set :project_root, 'server'
+
 # Default value for :linked_files is []
 set :linked_files, %w[
   config/database.yml
