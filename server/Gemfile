@@ -11,6 +11,7 @@ gem 'mini_magick'
 gem 'puma'
 
 group :development do
+  gem 'capistrano',         '~> 3.2.1', require: false
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'

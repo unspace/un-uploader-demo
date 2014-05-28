@@ -188,6 +188,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers!
+  capistrano (~> 3.2.1)
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
