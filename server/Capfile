@@ -50,6 +50,10 @@ module RemoteCacheWithProjectRootStrategy
   def release
     git :archive, fetch(:branch), fetch(:project_root), '| tar -x -C', release_path, "--strip=#{fetch(:project_root).count('/')+1}"
   end
+
+  def fetch_revision
+    context.capture(:git, "rev-parse --short #{fetch(:branch)}")
+  end
 end
 
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
