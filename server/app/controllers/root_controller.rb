@@ -1,5 +1,6 @@
 class RootController < ApplicationController
   def index
-    render text: 'Hello, this is a JSON API for github.com/unspace/un-uploader-demo'
+    index = Rails.root + 'public/index.html'
+    send_file index, type: 'text/html', disposition: 'inline'
   end
 end
