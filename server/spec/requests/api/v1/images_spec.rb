@@ -3,9 +3,9 @@ require 'spec_helper'
 describe 'Images API' do
   it 'replies with a list of visible images' do
     images = [
-      create_image(state: Image.states[:ready]),
-      create_image(state: Image.states[:ready]),
-      create_image(state: Image.states[:processing])
+      create_image(state: :processed),
+      create_image(state: :processed),
+      create_image(state: :processing)
     ]
 
     get '/api/images'
@@ -25,5 +25,15 @@ describe 'Images API' do
 
     expect(response).to be_success
     expect(json[:image][:id]).to eq images[0].id
+  end
+
+  it 'enqueues images for processing' do
+    post '/api/images', image: {
+      upload_key: '3a9edbe1-be14-4375-88ee-96cf9803ab73.png'
+    }
+
+    expect(response).to be_success
+    expect(json[:image][:id]).to eq '3a9edbe1-be14-4375-88ee-96cf9803ab73'
+    expect(ImageProcessor).to have(1).enqueued.jobs
   end
 end
