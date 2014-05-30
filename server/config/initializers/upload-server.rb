@@ -4,6 +4,12 @@ secrets = Rails.application.secrets
 $redis = Redis.new(url: secrets.redis)
 $redis.ping
 
+$s3 = Fog::Storage.new \
+  provider:              'AWS',
+  aws_access_key_id:     secrets.aws_key,
+  aws_secret_access_key: secrets.aws_secret
+
+$storage = UploadServer::Storage.new
 
 Pusher.logger = Rails.logger
 
