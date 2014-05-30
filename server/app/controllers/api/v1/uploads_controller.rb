@@ -9,7 +9,7 @@ class Api::V1::UploadsController < ApplicationController
     end
   end
 
-  protected
+  private
 
   def upload_params
     params.require(:upload).permit(
