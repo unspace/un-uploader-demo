@@ -1,8 +1,4 @@
 /* global require, module */
-var replace = require('broccoli-replace');
-var fs = require('fs');
-var path = require('path');
-
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp({
