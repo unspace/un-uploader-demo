@@ -2,6 +2,7 @@
   "name": "uploader-client",
   "dependencies": {
     "handlebars": "~1.3.0",
+    "ember-fsm": "~0.3.0",
     "jquery": "^1.11.1",
     "qunit": "~1.12.0",
     "ember-qunit": "~0.1.5",
