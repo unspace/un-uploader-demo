@@ -1,14 +1,17 @@
-<h1>
-  Images
-</h1>
+<section class="images">
+  <p class="add-image">
+    {{un-uploader label="+ Add Image" selected="addFile"}}
+  </p>
 
-<h3> Image list </h3>
-<ul>
-  {{#each image in model}}
-    <li>{{image.name}}</li>
-  {{/each}}
-</ul>
-
-<button {{action 'upload'}}>
-  Upload
-</button>
+  <ul>
+    {{#each image in controller}}
+      <li {{bind-attr class="image.isProcessed::loading"}}>
+        {{#if image.thumbUrl}}
+          <img {{bind-attr src="image.thumbUrl"}}>
+        {{else}}
+          [SPINNER]
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+</section>
