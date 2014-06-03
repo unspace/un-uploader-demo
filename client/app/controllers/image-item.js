@@ -1,14 +1,31 @@
+import { request } from 'ic-ajax';
+
 export default Em.ObjectController.extend(Em.FSM.Stateful, {
-  file:        null,
-  xhr:         null,
-  upload:      null,
-  progress:    null,
-  isProcessed: Em.computed.equal('model.state', 'processed'),
-  hasUpload:   Em.computed.bool('upload'),
+  file:            null,
+  xhr:             null,
+  upload:          null,
+  progress:        null,
+  receivedPromise: null,
+  isProcessed:     Em.computed.equal('model.state', 'processed'),
+  hasUpload:       Em.computed.bool('upload'),
+  hasFile:         Em.computed.bool('file'),
+  canUpload:       Em.computed.and('hasFile', 'hasUpload', 'isWaiting'),
+
+  wholeProgress: function() {
+    var progress = this.get('progress');
+
+    if (Em.isNone(progress)) {
+      return;
+    }
+
+    return Math.round(progress * 100);
+  }.property('progress'),
 
   actions: {
     startUpload: function() {
-      this.sendStateEvent('upload');
+      if (this.get('hasFile')) {
+        this.sendStateEvent('start');
+      }
     }
   },
 
@@ -17,40 +34,56 @@ export default Em.ObjectController.extend(Em.FSM.Stateful, {
   },
 
   stateEvents: {
+    start: {
+      transition: { waiting: 'signing',
+        doIf:   'hasFile',
+        action: 'getSignedUpload',
+        after:  'didGetSignedUpload'
+      }
+    },
+
     upload: {
-      transition: {
+      transition: { signing: 'uploading',
         doIf:   'hasUpload',
-        from:   'waiting',
-        to:     'uploading',
         action: 'performFileUpload',
         after:  'didPerformFileUpload'
       }
     },
 
-    connect: {
-      transition: {
-        from:   'uploading',
-        to:     'processing.connecting',
-        action: 'connectToImageProcessing',
-        after:  'didConnectToImageProcessing'
-      }
-    },
-
-    connected: {
-      transition: {
-        from:   'processing.connecting',
-        to:     'processing.listening',
+    process: {
+      transition: { uploading: 'processing',
         action: 'enqueueImageForProcessing'
       }
     },
 
     complete: {
-      transition: {
-        from:  'processing.listening',
-        to:    'processed',
-        after: 'didProcessImage'
+      transition: { processing: 'processed',
+        after: 'didComplete'
       }
     }
+  },
+
+  getSignedUpload: function() {
+    var xhr;
+    var file       = this.get('file');
+    var model      = this.get('model');
+    var controller = this;
+
+    xhr = request('/api/uploads', {
+      type: 'post',
+      data: { upload: { file_name: file.name } }
+    });
+
+    xhr.then(function(payload) {
+      model.set('id', payload.upload.id);
+      controller.set('upload', payload.upload);
+    });
+
+    return xhr;
+  },
+
+  didGetSignedUpload: function() {
+    this.sendStateEvent('upload');
   },
 
   performFileUpload: function() {
@@ -131,51 +164,26 @@ export default Em.ObjectController.extend(Em.FSM.Stateful, {
   },
 
   didPerformFileUpload: function() {
-    this.sendStateEvent('connect');
-  },
-
-  connectToImageProcessing: function() {
-    var channel = this.pusher.subscribe('images');
-    var promise;
-
-    this.set('channel', channel);
-
-    promise = new Em.RSVP.Promise(function(resolve, reject) {
-      channel.bind('pusher:subscription_succeeded', function() {
-        Em.run(function() {
-          resolve(channel);
-        });
-      });
-
-      channel.bind('pusher:subscription_failed', function(err) {
-        Em.run(function() {
-          reject(err);
-        });
-      });
-    });
-
-    return promise;
-  },
-
-  didConnectToImageProcessing: function() {
-
+    this.sendStateEvent('process');
   },
 
   enqueueImageForProcessing: function() {
+    var image  = this.get('model');
+    var upload = this.get('upload');
 
+    image.set('uploadKey', upload.key);
+
+    return image.save();
   },
 
   didProcessImage: function() {
+    this.sendStateEvent('complete');
+  }.on('processed'),
 
-  },
-
-  wholeProgress: function() {
-    var progress = this.get('progress');
-
-    if (Em.isNone(progress)) {
-      return;
-    }
-
-    return Math.round(progress * 100);
-  }.property('progress')
+  didComplete: function() {
+    this.set('upload', null);
+    this.set('progress', null);
+    this.set('file', null);
+    this.get('model').reload();
+  }
 });

@@ -1,3 +1,7 @@
 export default DS.Model.extend({
-  name: DS.attr()
+  uploadKey: DS.attr(),
+  state:     DS.attr(),
+  thumbUrl:  DS.attr(),
+  normalUrl: DS.attr(),
+  largeUrl:  DS.attr()
 });

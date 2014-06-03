@@ -1,15 +1,16 @@
 <section class="images">
   <p class="add-image">
-    {{un-uploader label="+ Add Image" selected="addFile"}}
+    {{un-uploader label="+ Add Image" selected="addFiles" multiple=true}}
   </p>
 
   <ul>
-    {{#each image in controller}}
-      <li {{bind-attr class="image.isProcessed::loading"}}>
+    {{#each image in this}}
+      <li>
         {{#if image.thumbUrl}}
           <img {{bind-attr src="image.thumbUrl"}}>
         {{else}}
-          [SPINNER]
+          [{{image.wholeProgress}}%]
+          {{image.file.name}}
         {{/if}}
       </li>
     {{/each}}
