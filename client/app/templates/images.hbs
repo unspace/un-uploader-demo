@@ -5,10 +5,11 @@
 
   <ul>
     {{#each image in this}}
-      <li>
+      <li class="image-item">
         {{#if image.thumbUrl}}
           <img {{bind-attr src="image.thumbUrl"}}>
         {{else}}
+          {{ui-spinner}}
           [{{image.wholeProgress}}%]
           {{image.file.name}}
         {{/if}}

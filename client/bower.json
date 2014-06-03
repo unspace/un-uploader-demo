@@ -4,6 +4,7 @@
     "pusher": "~2.2",
     "bourbon": "~3.2.3",
     "ember-fsm": "~0.3.0",
+    "spin.js": "~2.0.1",
     "handlebars": "~1.3.0",
     "jquery": "^1.11.1",
     "qunit": "~1.12.0",

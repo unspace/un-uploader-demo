@@ -13,6 +13,7 @@ var app = new EmberApp({
 });
 
 app.import('vendor/pusher/dist/pusher.js');
+app.import('vendor/spin.js/spin.js');
 
 // Use this to add additional libraries to the generated output files.
 app.import('vendor/ember-data/ember-data.js');
