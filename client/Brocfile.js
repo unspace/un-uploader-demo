@@ -29,4 +29,6 @@ app.import('vendor/ic-ajax/dist/named-amd/main.js', {
   ]
 });
 
+app.import('vendor/ember-fsm/dist/globals/ember-fsm.js');
+
 module.exports = app.toTree();
