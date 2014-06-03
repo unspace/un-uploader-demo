@@ -1,19 +1,17 @@
-<section class="images">
-  <p class="add-image">
-    {{ui-file-picker label="+ Add Image" selected="addFiles" multiple=true}}
-  </p>
+<div class="add-image">
+  {{ui-file-picker label="+ Add Image" selected="addFiles" multiple=true}}
+</div>
 
-  <ul>
-    {{#each image in this}}
-      <li class="image-item">
-        {{#if image.thumbUrl}}
-          <img {{bind-attr src="image.thumbUrl"}}>
-        {{else}}
-          {{ui-spinner}}
-          [{{image.wholeProgress}}%]
-          {{image.file.name}}
-        {{/if}}
-      </li>
-    {{/each}}
-  </ul>
-</section>
+<ul class="images-list">
+  {{#each image in this}}
+    <li class="image-item">
+      {{#if image.thumbUrl}}
+        <img {{bind-attr src="image.thumbUrl"}}>
+      {{else}}
+        {{ui-spinner}}
+        [{{image.wholeProgress}}%]
+        {{image.file.name}}
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>

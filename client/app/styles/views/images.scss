@@ -1,0 +1,21 @@
+section.images {
+  ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  ul {
+    @include outer-container;
+  }
+
+  li {
+    @include span-columns(3);
+    @include omega(4n);
+
+    width: 280px;
+    height: 280px;
+    overflow: hidden;
+    background: #efe;
+  }
+}

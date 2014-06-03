@@ -1,38 +1,8 @@
+@import "../../vendor/normalize-css/normalize.css";
 @import "../../vendor/bourbon/dist/bourbon";
+@import "../../vendor/neat/app/assets/stylesheets/neat";
 
-html, body {
-  font-family: "Helvetica Neue", Ariel, Sans;
-  margin: 20px;
-}
+@import "views/application";
+@import "views/images";
 
-.ui-file-picker {
-  display: inline-block;
-  position: relative;
-  width: 120px;
-  height: 21px;
-  overflow: hidden;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.ui-file-picker-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-
-  button {
-    height: 21px;
-    width: 100%;
-  }
-}
-
-.ui-file-picker input[type="file"] {
-  position: relative;
-  text-align: right;
-  opacity: 0;
-  z-index: 2;
-}
+@import "components/ui-file-picker";
