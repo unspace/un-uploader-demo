@@ -5,6 +5,7 @@
     "location": true,
     "setTimeout": true,
     "Ember": true,
+    "Pusher": true,
     "Em": true,
     "DS": true,
     "$": true,

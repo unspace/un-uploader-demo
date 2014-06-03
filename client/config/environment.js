@@ -10,7 +10,9 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+
+    PUSHER_APP_KEY: '7530178e1c206a0ae720'
   };
 
   if (environment === 'development') {
@@ -26,7 +28,6 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
   }
 
   return ENV;
