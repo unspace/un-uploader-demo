@@ -6,6 +6,7 @@
     "setTimeout": true,
     "Ember": true,
     "Pusher": true,
+    "Spinner": true,
     "Em": true,
     "DS": true,
     "$": true,
