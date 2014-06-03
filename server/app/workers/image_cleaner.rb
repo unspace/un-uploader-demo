@@ -3,9 +3,12 @@ class ImageCleaner
 
   def perform(image_id)
     image = Image.processed.find(image_id)
-    remote_file = $storage.delete("uploads/#{image.upload_key}")
     image.destroy
+
+    $storage.delete("uploads/#{image.upload_key}")
+
+    ImageProcessor::VARIANTS.keys.each do |type|
+      $storage.delete("assets/images/#{type}-#{image.upload_key}")
+    end
   end
-
 end
-
