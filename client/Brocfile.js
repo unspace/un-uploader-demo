@@ -12,6 +12,8 @@ var app = new EmberApp({
   getEnvJSON: require('./config/environment')
 });
 
+app.import('vendor/pusher/dist/pusher.js');
+
 // Use this to add additional libraries to the generated output files.
 app.import('vendor/ember-data/ember-data.js');
 
