@@ -9,7 +9,7 @@ export default Em.ObjectController.extend(Em.FSM.Stateful, {
   isProcessed:     Em.computed.equal('model.state', 'processed'),
   hasUpload:       Em.computed.bool('upload'),
   hasFile:         Em.computed.bool('file'),
-  canUpload:       Em.computed.and('hasFile', 'hasUpload', 'isWaiting'),
+  canUpload:       Em.computed.and('hasFile', 'hasUpload', 'isInitialized'),
 
   wholeProgress: function() {
     var progress = this.get('progress');
@@ -29,13 +29,9 @@ export default Em.ObjectController.extend(Em.FSM.Stateful, {
     }
   },
 
-  states: {
-    initialState: 'waiting'
-  },
-
   stateEvents: {
     start: {
-      transition: { waiting: 'signing',
+      transition: { initialized: 'signing',
         doIf:   'hasFile',
         action: 'getSignedUpload',
         after:  'didGetSignedUpload'
