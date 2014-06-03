@@ -36,4 +36,13 @@ describe 'Images API' do
     expect(json[:image][:id]).to eq '3a9edbe1-be14-4375-88ee-96cf9803ab73'
     expect(ImageProcessor).to have(1).enqueued.jobs
   end
+
+  it 'enqueues image for later deletion' do
+    post '/api/images', image: {
+      upload_key: '3a9edbe1-be14-4375-88ee-96cf9803ab73.png'
+    }
+
+    expect(ImageCleaner).to have(1).enqueued.jobs
+    expect(ImageCleaner).to have_queued_job_at(3.hours.from_now, "3a9edbe1-be14-4375-88ee-96cf9803ab73")
+  end
 end

@@ -12,6 +12,7 @@ class Api::V1::ImagesController < ApplicationController
 
     if image.valid?
       ImageProcessor.perform_async(image.id)
+      ImageCleaner.perform_in(3.hours, image.id)
     end
 
     respond_with :api, :v1, image
