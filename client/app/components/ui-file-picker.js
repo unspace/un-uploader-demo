@@ -1,5 +1,5 @@
 export default Em.Component.extend({
-  classNames: 'un-uploader',
+  classNames: 'ui-file-picker',
   label:      'Choose Files',
   disabled:   false,
   multiple:   true,

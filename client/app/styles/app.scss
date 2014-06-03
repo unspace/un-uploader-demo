@@ -5,7 +5,7 @@ html, body {
   margin: 20px;
 }
 
-.un-uploader {
+.ui-file-picker {
   display: inline-block;
   position: relative;
   width: 120px;
@@ -17,7 +17,7 @@ html, body {
   }
 }
 
-.un-uploader-button {
+.ui-file-picker-button {
   position: absolute;
   top: 0;
   left: 0;
@@ -30,7 +30,7 @@ html, body {
   }
 }
 
-.un-uploader input[type="file"] {
+.ui-file-picker input[type="file"] {
   position: relative;
   text-align: right;
   opacity: 0;
