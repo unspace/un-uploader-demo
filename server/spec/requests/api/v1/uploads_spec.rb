@@ -5,7 +5,7 @@ describe 'Uploads API' do
     post '/api/uploads', upload: { file_name: 'test.png' }
 
     expect(response).to be_success
-    expect(json[:upload][:signed_url]).to be_present
+    expect(json[:upload][:url]).to be_present
   end
 
   it 'responds with error data when given an unacceptable file' do

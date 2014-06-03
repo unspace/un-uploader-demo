@@ -22,25 +22,22 @@ module UploadServer
       @id ||= SecureRandom.uuid
     end
 
-    def as_json(*args, &blk)
-      { id:         id,
-        key:        "#{id}.#{file_ext}",
-        expires_at: expires_at,
-        signed_url: signed_url }
-    end
-
-    def signed_url
-      @signed_url ||= $storage.signed_put_url("uploads/#{id}.#{file_ext}", expires_at,
-        'Content-Type' => mime_type,
+    def url
+      @url ||= $storage.signed_put_url("uploads/#{key}", expires_at,
+        'Content-Type' => mime,
         'x-amz-acl'    => 'private'
       )
+    end
+
+    def key
+      "#{id}.#{file_ext}"
     end
 
     def expires_at
       Time.now.utc + UPLOAD_TTL
     end
 
-    def mime_type
+    def mime
       file_type && file_type[:mime]
     end
 
