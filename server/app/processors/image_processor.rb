@@ -31,6 +31,7 @@ class ImageProcessor
     @image.processed!
     notify :processed
   rescue => error
+    Rails.logger.info "error processing", error
     @image && @image.destroy
     notify :failed, message: error.message
   end
@@ -51,6 +52,7 @@ class ImageProcessor
     remote_file = nil
 
     loop do
+      Rails.logger.info "retrying"
       if count == max
         raise MaxWaitError, "unable to find uploaded #{store.name}"
       end
