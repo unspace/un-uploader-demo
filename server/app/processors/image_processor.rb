@@ -2,6 +2,7 @@ class ImageProcessor
   include Sidekiq::Worker
 
   class Error < StandardError; end
+  class MaxWaitError < Error; end
   class InvalidError < Error; end
 
   CHANNEL = 'images'
@@ -34,11 +35,41 @@ class ImageProcessor
     notify :failed, message: error.message
   end
 
+  def upload_name
+    "uploads/#{@image.upload_key}"
+  end
+
   def download
-    remote_file = $storage.get("uploads/#{@image.upload_key}")
+    remote_file = try_until_remote_file_available
     original_file.write(remote_file.body)
     original_file.close
   end
+
+  def try_until_remote_file_available
+    max         = 10
+    count       = 0
+    remote_file = nil
+
+    loop do
+      if count == max
+        raise MaxWaitError, "unable to find uploaded #{store.name}"
+      end
+
+      count += 1
+      sleep 1
+      notify :try, count: count
+
+      begin
+        remote_file = $storage.get(upload_name)
+        break
+      rescue Excon::Errors::NotFound
+        next
+      end
+    end
+
+    remote_file
+  end
+
 
   def process
     VARIANTS.each do |type, size|
