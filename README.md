@@ -49,7 +49,7 @@ versions of Nginx like
 [nginx-big-upload](https://github.com/pgaertig/nginx-big-upload) and
 [lua-resty-upload](https://github.com/openresty/lua-resty-upload) that look
 promising. We really shy away from having file uploads go directly through the
-application stack (cough Node people), if you can use S3 or an alternative
+application stack, if you can use S3 or an alternative
 that promises the same functionality we think that is the best approach.
 
 ## Pusher
