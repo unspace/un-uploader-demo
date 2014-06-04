@@ -1,31 +1,62 @@
 .ui-file-picker {
-  display: inline-block;
-  position: relative;
-  width: 120px;
-  height: 21px;
+  display: block;
+  position: fixed;
+  top: 70px;
+  left: 20px;
+  width: 200px;
+  height: 200px;
   overflow: hidden;
+  text-align: center;
+  background: $green;
+
+  &:before {
+    display: block;
+    content: '+';
+    padding-top: 0.05em;
+    font-size: 8em;
+    font-weight: 400;
+    line-height: 1;
+    color: lighten( $green, 30% );
+  }
+
+  label {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    padding: 7px;
+    background: darken( $green, 5% );
+    color: lighten( $green, 45% );
+  }
+
+  input[type="file"] {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    opacity: 0;
+    z-index: 2;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
   &:hover {
     cursor: pointer;
+    background: lighten( $green, 10% );
+
+    &:before {
+      color: white;
+    }
+
+    label {
+      background: $green;
+    }
   }
-}
-
-.ui-file-picker-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-
-  button {
-    height: 21px;
-    width: 100%;
-  }
-}
-
-.ui-file-picker input[type="file"] {
-  position: relative;
-  text-align: right;
-  opacity: 0;
-  z-index: 2;
 }

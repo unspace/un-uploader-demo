@@ -1,8 +1,13 @@
 export default Ember.Component.extend({
-  classNames: 'ui-file-picker',
-  label:      'Choose Files',
-  disabled:   false,
-  multiple:   true,
+  classNames:         ['ui-file-picker'],
+  classNameBindings:  ['disabled'],
+  label:              'Choose Files',
+  disabled:           false,
+  multiple:           true,
+
+  inputId: function() {
+    return 'file-input-' + this.get('elementId');
+  }.property('elementId'),
 
   didSelect: function(list) {
     var files;

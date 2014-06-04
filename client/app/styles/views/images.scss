@@ -6,7 +6,7 @@ section.images {
   }
 
   ul {
-    @include outer-container;
+    @include clearfix;
   }
 
   li {
