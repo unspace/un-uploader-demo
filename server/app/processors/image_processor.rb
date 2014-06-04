@@ -39,6 +39,7 @@ class ImageProcessor
     @cleaner.perform_async(@image.id)
     notify :failed, message: error.message
   rescue => error
+    @cleaner.perform_async(@image.id)
     log "processing failed: #{error.class} - #{error.message}\n\n" \
         "#{error.backtrace.join("\n")}"
     notify :failed, message: 'Processing failed, try again later'
