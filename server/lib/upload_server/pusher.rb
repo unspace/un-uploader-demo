@@ -18,7 +18,7 @@ module UploadServer
       if @test
         @memo << OpenStruct.new(channel: channel, event: event, data: data)
       else
-        Pusher[channel].trigger(event, data)
+        ::Pusher[channel].trigger(event, data)
       end
     end
   end
