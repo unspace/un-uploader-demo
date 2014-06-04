@@ -35,9 +35,9 @@ class ImageProcessor
     notify :processed
     @cleaner.perform_in(3.hours, @image.id)
   rescue => error
-    Rails.logger.info "[ImageProcessor] error processing image: #{error}"
+    log "Error processing image: #{error.class} #{error.message}\n\n#{error.backtrace.join("\n")}"
     @cleaner.perform_async(@image.id)
-    notify :failed, message: error.message
+    notify :failed, message: 'Processing failed, try again later.'
   end
 
   def upload_name
@@ -57,7 +57,7 @@ class ImageProcessor
 
     loop do
       if count == max
-        raise MaxWaitError, "unable to find uploaded #{store.name}"
+        raise MaxWaitError, "unable to find uploaded image"
       end
 
       count += 1
@@ -68,7 +68,7 @@ class ImageProcessor
         remote_file = @storage.get(upload_name)
         break
       rescue Excon::Errors::NotFound
-        Rails.logger.info "[ImageProcessor] retrying fetch from s3"
+        log "[ImageProcessor] retrying fetch from s3"
         next
       end
     end
@@ -118,7 +118,12 @@ class ImageProcessor
     data  = {}
     data[:image_id] = @image.id if @image
     data.update(opts)
+    log "event:#{event} data:#{data.inspect}"
     Pusher[CHANNEL].trigger(event, data)
+  end
+
+  def log(msg)
+    Rails.logger.info("[ImageProcessor] #{msg}")
   end
 
   def invalid!(msg)
