@@ -35,6 +35,10 @@ body > div > header {
     text-transform: lowercase;
     margin: 0;
 
+    &:hover {
+      color: #ddd;
+    }
+
     .un {
       display: inline-block;
       background: $crimson;
