@@ -17,6 +17,7 @@ to re-install the Guest Additions, use
 
 ```sh
 $ vagrant ssh
+$ cd server
 $ bundle
 $ rake db:setup
 $ bin/rails s
