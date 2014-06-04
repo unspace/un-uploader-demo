@@ -3,6 +3,21 @@
 var Application = require('uploader-client/app')['default'];
 var Router = require('uploader-client/router')['default'];
 
+import { request } from 'ic-ajax';
+
+Ember.Application.initializer({
+  name: 'ic-ajax_ED',
+  after: 'store',
+  initialize: function(container, application){
+      DS.ActiveModelAdapter.reopen({
+        ajax: function(url, type, options){
+          options = this.ajaxOptions(url, type, options);
+          return request(options);
+        }
+      });
+  }
+});
+
 export default function startApp(attrs) {
   var App;
 

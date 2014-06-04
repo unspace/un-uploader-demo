@@ -14,7 +14,7 @@
     "ember": "1.5.1",
     "ember-data": "1.0.0-beta.7",
     "ember-resolver": "stefanpenner/ember-jj-abrams-resolver#master",
-    "ic-ajax": "~1.x",
+    "ic-ajax": "~1.0.4",
     "loader": "stefanpenner/loader.js#1.0.0",
     "ember-cli-shims": "stefanpenner/ember-cli-shims#0.0.1",
     "ember-qunit-notifications": "^0.0.1",
