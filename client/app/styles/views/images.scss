@@ -32,11 +32,23 @@ section.images {
       left: 0;
       right: 0;
       bottom: 0;
-      background: #ddd;
+      background: #eee;
       color: #666;
       font-size: 1em;
       font-weight: 400;
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 5px;
+    }
+
+    .progress-bar {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      background: $green;
     }
   }
 }

@@ -8,7 +8,7 @@
     {{error}}
   {{else}}
     {{ui-spinner}}
-    [{{image.wholeProgress}}%]
     <h2>{{image.file.name}}</h2>
+    {{progress-bar progress=image.wholeProgress}}
   {{/if}}
 {{/if}}
