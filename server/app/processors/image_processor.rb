@@ -35,10 +35,13 @@ class ImageProcessor
     @image.processed!
     notify :processed
     @cleaner.perform_in(3.hours, @image.id)
-  rescue => error
-    log "Error processing image: #{error.class} #{error.message}\n\n#{error.backtrace.join("\n")}"
+  rescue InvalidError, MaxWaitError => error
     @cleaner.perform_async(@image.id)
-    notify :failed, message: 'Processing failed, try again later.'
+    notify :failed, message: error.message
+  rescue => error
+    log "processing failed: #{error.class} - #{error.message}\n\n" \
+        "#{error.backtrace.join("\n")}"
+    notify :failed, message: 'Processing failed, try again later'
   end
 
   def upload_name
@@ -56,8 +59,8 @@ class ImageProcessor
     remote_file = nil
 
     loop do
-        raise MaxWaitError, "unable to find uploaded image"
       if count == MAX_TRIES
+        raise MaxWaitError, 'Unable to find uploaded image'
       end
 
       count += 1
@@ -68,7 +71,7 @@ class ImageProcessor
         remote_file = @storage.get(upload_name)
         break
       rescue Excon::Errors::NotFound
-        log "[ImageProcessor] retrying fetch from s3"
+        log 'Retrying fetch from S3'
         next
       end
     end
@@ -84,7 +87,7 @@ class ImageProcessor
       mime  = ACCEPTED_MIMES[@image.upload_ext.to_sym]
 
       if image.mime_type != mime
-        invalid! "invalid format: #{image.mime_type}, expected: #{mime}"
+        invalid! 'Unsupported image format, try PNG, GIF, or JPEG'
       end
 
       image.combine_options do |opt|
