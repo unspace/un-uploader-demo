@@ -4,7 +4,8 @@ class ImageSerializer < ApplicationSerializer
 
   attributes \
     :id,
-    :state
+    :state,
+    :created_at
 
   def attributes
     h = super

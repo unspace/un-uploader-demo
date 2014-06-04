@@ -1,6 +1,16 @@
 export default Ember.ArrayController.extend({
   itemController: 'imageItem',
 
+  newest: Ember.computed.sort('@this.@each.createdAt', function(a, b) {
+    if ( a.get('createdAt') > b.get('createdAt')) {
+      return -1;
+    } else if (b.get('createdAt') === undefined || a.get('createdAt') < b.get('createdAt')) {
+      return 1;
+    }
+
+    return 0;
+  }),
+
   bindEvent: function (event) {
     var _this = this;
     this.get('channel').bind(event, function(payload) {

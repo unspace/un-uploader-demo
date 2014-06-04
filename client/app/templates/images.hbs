@@ -3,7 +3,7 @@
 </div>
 
 <ul class="images-list">
-  {{#each image in controller}}
+  {{#each image in newest}}
     <li {{bind-attr class=":image-item image.currentState"}}>
       {{#if image.thumbUrl}}
         <img {{bind-attr src="image.thumbUrl"}}>
