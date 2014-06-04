@@ -12,7 +12,7 @@ export default Ember.Route.extend({
         var item = controller.findBy('id', payload.image_id);
 
         if (item) {
-          Em.sendEvent(item, event, [payload]);
+          Ember.sendEvent(item, event, [payload]);
         }
       });
     }

@@ -1,4 +1,4 @@
-export default Em.Component.extend({
+export default Ember.Component.extend({
   classNames: 'ui-file-picker',
   label:      'Choose Files',
   disabled:   false,
@@ -24,7 +24,7 @@ export default Em.Component.extend({
     var component = this;
 
     this.$('input[type="file"]').on('change', function(event) {
-      Em.run(function() {
+      Ember.run(function() {
         component.didSelect(event.target.files);
       });
     });

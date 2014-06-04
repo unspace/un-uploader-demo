@@ -17,7 +17,7 @@ var SPINNER_PROPS = [
   'left'
 ];
 
-export default Em.Component.extend({
+export default Ember.Component.extend({
   lines: 13,            // The number of lines to draw
   length: 20,           // The length of each line
   width: 10,            // The line thickness

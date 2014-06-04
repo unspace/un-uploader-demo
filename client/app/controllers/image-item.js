@@ -1,20 +1,20 @@
 import { request } from 'ic-ajax';
 
-export default Em.ObjectController.extend(Em.FSM.Stateful, {
+export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
   file:            null,
   xhr:             null,
   upload:          null,
   progress:        null,
   receivedPromise: null,
-  isProcessed:     Em.computed.equal('model.state', 'processed'),
-  hasUpload:       Em.computed.bool('upload'),
-  hasFile:         Em.computed.bool('file'),
-  canUpload:       Em.computed.and('hasFile', 'hasUpload', 'isInitialized'),
+  isProcessed:     Ember.computed.equal('model.state', 'processed'),
+  hasUpload:       Ember.computed.bool('upload'),
+  hasFile:         Ember.computed.bool('file'),
+  canUpload:       Ember.computed.and('hasFile', 'hasUpload', 'isInitialized'),
 
   wholeProgress: function() {
     var progress = this.get('progress');
 
-    if (Em.isNone(progress)) {
+    if (Ember.isNone(progress)) {
       return;
     }
 
@@ -90,15 +90,15 @@ export default Em.ObjectController.extend(Em.FSM.Stateful, {
     var receivedResolver;
     var receivedRejector;
 
-    receivedPromise = new Em.RSVP.Promise(function(resolve, reject) {
+    receivedPromise = new Ember.RSVP.Promise(function(resolve, reject) {
       receivedResolver = resolve;
       receivedRejector = reject;
     });
 
     this.set('receivedPromise', receivedPromise);
 
-    return new Em.RSVP.Promise(function(resolve, reject) {
-      Em.$.ajax(upload.url, {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      Ember.$.ajax(upload.url, {
         type:        'put',
         data:        file,
         crossDomain: true,
@@ -113,12 +113,12 @@ export default Em.ObjectController.extend(Em.FSM.Stateful, {
         // rejects onload with the custom progress listener below.
         // TODO: Fix this so that it will work idiomatically.
         xhr: function() {
-          var xhr = Em.$.ajaxSettings.xhr();
+          var xhr = Ember.$.ajaxSettings.xhr();
 
           controller.set('xhr', xhr.upload);
 
           xhr.upload.addEventListener('progress', function(event) {
-            Em.run(function() {
+            Ember.run(function() {
               if (event.lengthComputable) {
                 controller.set('progress', (event.loaded / event.total));
               }
@@ -128,7 +128,7 @@ export default Em.ObjectController.extend(Em.FSM.Stateful, {
           xhr.upload.addEventListener('load', function() {
             var http = this;
 
-            Em.run(function() {
+            Ember.run(function() {
               resolve(http);
             });
           });
@@ -136,7 +136,7 @@ export default Em.ObjectController.extend(Em.FSM.Stateful, {
           xhr.addEventListener('load', function() {
             var http = this;
 
-            Em.run(function() {
+            Ember.run(function() {
               if (http.status === 200) {
                 receivedResolver(http);
               } else {
@@ -148,7 +148,7 @@ export default Em.ObjectController.extend(Em.FSM.Stateful, {
           xhr.upload.addEventListener('error', function() {
             var http = this;
 
-            Em.run(function() {
+            Ember.run(function() {
               reject(http);
             });
           });
