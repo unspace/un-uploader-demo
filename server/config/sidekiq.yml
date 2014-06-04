@@ -1,4 +1,4 @@
 ---
 :verbose: true
 :logfile: ./log/sidekiq.log
-:concurrency:  30
+:concurrency:  2
