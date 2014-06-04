@@ -13,6 +13,7 @@ module UploadServer
     require 'upload_server/api_constraint'
     require 'upload_server/storage'
     require 'upload_server/upload'
+    require 'upload_server/pusher'
 
     config.generators do |g|
       g.assets false

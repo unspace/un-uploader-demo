@@ -18,8 +18,13 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.order = 'random'
 
+  config.before :suite do
+    $pusher.test!
+  end
+
   config.before :each do
     Sidekiq::Worker.clear_all
+    $pusher.clear!
   end
 end
 

@@ -121,7 +121,7 @@ class ImageProcessor
     data[:image_id] = @image.id if @image
     data.update(opts)
     log "event:#{event} data:#{data.inspect}"
-    Pusher[CHANNEL].trigger(event, data)
+    $pusher.trigger(CHANNEL, event, data)
   end
 
   def log(msg)

@@ -20,3 +20,5 @@ Pusher.url = begin
 
   "http://#{key}:#{secret}@api.pusherapp.com/apps/#{app_id}"
 end
+
+$pusher = UploadServer::Pusher.new
