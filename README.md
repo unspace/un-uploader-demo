@@ -61,3 +61,9 @@ your own pub/sub implementation using something like the iconic
 solution like Sam Saffron's
 [message_bus](https://github.com/SamSaffron/message_bus). You have many options
 and you aren't locked into Pusher, but Pusher is really great.
+
+## Future
+
+* We'd love to turn the Ember part of this example into a library.
+* We'd love to turn the Ruby part of this example into a library.
+* But first we want to see what happens and get some feedback :heart:
