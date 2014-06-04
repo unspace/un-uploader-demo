@@ -11,13 +11,8 @@ export default Em.ArrayController.extend({
         this.insertAt(0, image);
         item = this.get('firstObject');
         item.set('file', file);
+        item.send('startUpload');
       }, this);
-
-      this.send('upload');
-    },
-
-    upload: function() {
-      this.invoke('send', 'startUpload');
     }
   }
 });

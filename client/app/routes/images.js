@@ -9,7 +9,7 @@ export default Ember.Route.extend({
 
     function bindEvent(event) {
       channel.bind(event, function(payload) {
-        var item = controller.findBy('model.id', payload.image_id);
+        var item = controller.findBy('id', payload.image_id);
 
         if (item) {
           Em.sendEvent(item, event, [payload]);
