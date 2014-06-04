@@ -3,6 +3,6 @@ export default Ember.Component.extend({
   classNameBindings: ['image.currentState'],
   attributeBindings: ['style'],
   style: function() {
-    return 'background-image: url("' + this.get('image.thumbUrl') + '");';
-  }.property('image.thumbUrl')
+    return 'background-image: url("' + this.get('image.normalUrl') + '");';
+  }.property('image.normalUrl')
 });
