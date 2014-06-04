@@ -6,6 +6,7 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
   upload:          null,
   progress:        null,
   receivedPromise: null,
+  error:           null,
   isProcessed:     Ember.computed.equal('model.state', 'processed'),
   hasUpload:       Ember.computed.bool('upload'),
   hasFile:         Ember.computed.bool('file'),
@@ -56,6 +57,14 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
       transition: { processing: 'processed',
         after: 'didComplete'
       }
+    },
+
+    error: {
+      transitions: [
+        { signing:    'failed', after: 'didFailSigning' },
+        { processing: 'failed', after: 'didFailProcessing' },
+        { $any:       'failed' }
+      ]
     }
   },
 
@@ -70,10 +79,12 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
       data: { upload: { file_name: file.name } }
     });
 
-    xhr.then(function(payload) {
-      model.set('id', payload.upload.id);
-      controller.set('upload', payload.upload);
-    });
+    xhr.then(
+      function(payload) {
+        model.set('id', payload.upload.id);
+        controller.set('upload', payload.upload);
+      }
+    );
 
     return xhr;
   },
@@ -172,14 +183,37 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
     return image.save();
   },
 
-  didProcessImage: function() {
+  didComplete: function() {
+    this.reset();
+    this.get('model').reload();
+  },
+
+  didFailSigning: function(transition) {
+    var error = transition.eventArgs[0].error;
+    this.set('error', error.jqXHR.responseJSON.errors.base[0]);
+  },
+
+  didFailProcessing: function(transition) {
+    var error = transition.eventArgs[0];
+    this.set('error', error.message);
+  },
+
+  didFail: function() {
+    this.set('error', 'Image upload failed, try again later.');
+  },
+
+  reset: function() {
+    this.set('upload',   null);
+    this.set('progress', null);
+    this.set('file',     null);
+    this.set('error',    null);
+  },
+
+  _didProcessImage: function() {
     this.sendStateEvent('complete');
   }.on('processed'),
 
-  didComplete: function() {
-    this.set('upload', null);
-    this.set('progress', null);
-    this.set('file', null);
-    this.get('model').reload();
-  }
+  _didFailProcessing: function(payload) {
+    this.sendStateEvent('error', payload);
+  }.on('failed')
 });

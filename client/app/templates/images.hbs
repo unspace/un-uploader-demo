@@ -4,13 +4,17 @@
 
 <ul class="images-list">
   {{#each image in this}}
-    <li class="image-item">
+    <li {{bind-attr class=":image-item image.currentState"}}>
       {{#if image.thumbUrl}}
         <img {{bind-attr src="image.thumbUrl"}}>
       {{else}}
-        {{ui-spinner}}
-        [{{image.wholeProgress}}%]
-        {{image.file.name}}
+        {{#if image.isInFailed}}
+          {{error}}
+        {{else}}
+          {{ui-spinner}}
+          [{{image.wholeProgress}}%]
+          {{image.file.name}}
+        {{/if}}
       {{/if}}
     </li>
   {{/each}}
