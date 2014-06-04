@@ -10,7 +10,7 @@ export default Ember.ArrayController.extend({
         if (item) {
           Ember.sendEvent(item, event, [payload]);
         } else if (event === 'processed') {
-          _this.insertAt(0, _this.store.find('image', payload.image_id));
+          _this.store.find('image', payload.image_id);
         }
       });
     });
@@ -33,8 +33,8 @@ export default Ember.ArrayController.extend({
         var item;
 
         image = this.store.createRecord('image');
-        this.insertAt(0, image);
-        item = this.get('firstObject');
+        this.pushObject(image);
+        item = this.get('lastObject');
         item.set('file', file);
         item.send('startUpload');
       }, this);
