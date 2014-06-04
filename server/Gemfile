@@ -22,5 +22,4 @@ end
 group :test do
   gem 'spring-commands-rspec'
   gem 'rspec-rails'
-  gem 'rspec-sidekiq'
 end

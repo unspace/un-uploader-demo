@@ -1,5 +1,4 @@
 class ImageProcessor
-  include Sidekiq::Worker
 
   class Error < StandardError; end
   class MaxWaitError < Error; end
@@ -19,9 +18,13 @@ class ImageProcessor
     large:  '1200x>'
   }
 
-  def perform(image_id)
+  def initialize(image_id, storage = $storage, cleaner = ImageCleaner)
     @image = Image.unprocessed.find(image_id)
+    @storage = storage
+    @cleaner = cleaner
+  end
 
+  def perform
     @image.processing!
     notify :processing
 
@@ -30,9 +33,10 @@ class ImageProcessor
 
     @image.processed!
     notify :processed
+    @cleaner.perform_in(3.hours, @image.id)
   rescue => error
-    Rails.logger.info "error processing", error
-    @image && @image.destroy
+    Rails.logger.info "[ImageProcessor] error processing image: #{error}"
+    @cleaner.perform_async(@image.id)
     notify :failed, message: error.message
   end
 
@@ -52,7 +56,6 @@ class ImageProcessor
     remote_file = nil
 
     loop do
-      Rails.logger.info "retrying"
       if count == max
         raise MaxWaitError, "unable to find uploaded #{store.name}"
       end
@@ -62,9 +65,10 @@ class ImageProcessor
       notify :try, count: count
 
       begin
-        remote_file = $storage.get(upload_name)
+        remote_file = @storage.get(upload_name)
         break
       rescue Excon::Errors::NotFound
+        Rails.logger.info "[ImageProcessor] retrying fetch from s3"
         next
       end
     end
@@ -91,7 +95,7 @@ class ImageProcessor
 
       image.format 'jpeg'
 
-      $storage.upload(image.path, key, acl: 'public-read')
+      @storage.upload(image.path, key, acl: 'public-read')
     end
   end
 
