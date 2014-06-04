@@ -4,7 +4,8 @@ class ImageProcessor
   class MaxWaitError < Error; end
   class InvalidError < Error; end
 
-  CHANNEL = 'images'
+  CHANNEL   = 'images'
+  MAX_TRIES = 10
 
   ACCEPTED_MIMES = {
     jpg: 'image/jpeg',
@@ -51,13 +52,12 @@ class ImageProcessor
   end
 
   def try_until_remote_file_available
-    max         = 10
     count       = 0
     remote_file = nil
 
     loop do
-      if count == max
         raise MaxWaitError, "unable to find uploaded image"
+      if count == MAX_TRIES
       end
 
       count += 1
