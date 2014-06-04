@@ -10,6 +10,7 @@ gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 gem 'pusher'
 gem 'mini_magick'
 gem 'puma'
+gem 'sinatra', '>= 1.3.0', :require => nil
 
 group :development do
   gem 'capistrano',         '~> 3.2.1', require: false
