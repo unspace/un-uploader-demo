@@ -38,6 +38,11 @@ export default Ember.ArrayController.extend({
         item.set('file', file);
         item.send('startUpload');
       }, this);
+    },
+
+    removeItem: function(item) {
+      item.unloadRecord();
+      this.removeObject(item);
     }
   }
 });

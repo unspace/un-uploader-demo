@@ -9,6 +9,9 @@
         <img {{bind-attr src="image.thumbUrl"}}>
       {{else}}
         {{#if image.isInFailed}}
+          <button {{action "removeItem" image}}>
+            X {{! LOL sorry not sorry Jorge }}
+          </button>
           {{error}}
         {{else}}
           {{ui-spinner}}
