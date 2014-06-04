@@ -8,11 +8,12 @@
   overflow: hidden;
   text-align: center;
   background: $green;
+  @include user-select( none );
 
   &:before {
     display: block;
     content: '+';
-    padding-top: 0.05em;
+    padding-top: 0.15em;
     font-size: 8em;
     font-weight: 400;
     line-height: 1;

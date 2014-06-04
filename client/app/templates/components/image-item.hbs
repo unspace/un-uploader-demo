@@ -3,9 +3,11 @@
 {{else}}
   {{#if image.isInFailed}}
     <button {{action "removeItem" image}}>
-      X {{! LOL sorry not sorry Jorge }}
+      &times; {{! LOL sorry not sorry Jorge }}
     </button>
-    {{error}}
+    {{#if error}}
+      <h2>{{error}}</h2>
+    {{/if}}
   {{else}}
     {{ui-spinner}}
     <h2>{{image.file.name}}</h2>

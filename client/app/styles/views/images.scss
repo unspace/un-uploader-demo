@@ -22,6 +22,7 @@ section.images {
     margin: 0 20px 20px 0;
     border: 1px solid #eee;
     @include box-sizing( border-box );
+    @include animation( grow 600ms both );
 
     img {
       display: none;
@@ -40,7 +41,7 @@ section.images {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      padding: 5px;
+      padding: 5px 10px;
     }
 
     .progress-bar {
@@ -49,6 +50,41 @@ section.images {
       bottom: 0;
       height: 2px;
       background: $green;
+    }
+
+    &.failed {
+      background: lighten( $red, 30% );
+      @include user-select( none );
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      button {
+        display: block;
+        position: absolute;
+        margin: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 30px;
+        border: 0;
+        width: 100%;
+        font-size: 8em;
+        line-height: 0.5;
+        background: transparent;
+        color: lighten($red, 15%);
+      }
+
+      h2 {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        text-overflow: clip;
+        overflow: visible;
+        background: rgba( $red, 0.25 );
+        color: lighten( $red, 50% );
+        text-align: center;
+      }
     }
   }
 }

@@ -1,3 +1,7 @@
+* {
+  outline: none;
+}
+
 html, body {
   font: normal normal 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0;
@@ -7,9 +11,12 @@ input, button, textarea {
   font: inherit;
 }
 
+button, a {
+  cursor: pointer;
+}
+
 a {
   text-decoration: none;
-  cursor: pointer;
   &:hover {
     text-decoration: underline;
   }
@@ -28,6 +35,7 @@ body > div > header {
   padding: 10px 20px;
   background: rgba(#fff, 0.95);
   border-bottom: 1px solid #eee;
+  @include user-select( none );
 
   h1 {
     color: $crimson;
