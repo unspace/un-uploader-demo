@@ -4,13 +4,15 @@ export default Ember.ArrayController.extend({
   bindEvent: function (event) {
     var _this = this;
     this.get('channel').bind(event, function(payload) {
-      var item = _this.findBy('id', payload.image_id);
+      Ember.run(function() {
+        var item = _this.findBy('id', payload.image_id);
 
-      if (item) {
-        Ember.sendEvent(item, event, [payload]);
-      } else if (event === 'processed') {
-        _this.insertAt(0, _this.store.find('image', payload.image_id));
-      }
+        if (item) {
+          Ember.sendEvent(item, event, [payload]);
+        } else if (event === 'processed') {
+          _this.insertAt(0, _this.store.find('image', payload.image_id));
+        }
+      });
     });
   },
 
