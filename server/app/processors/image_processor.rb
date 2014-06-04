@@ -113,9 +113,8 @@ class ImageProcessor
     original_file.path
   end
 
-  def notify(event_name, opts = {})
-    event = event_name.to_s.dasherize
-    data  = {}
+  def notify(event, opts = {})
+    data = {}
     data[:image_id] = @image.id if @image
     data.update(opts)
     log "event:#{event} data:#{data.inspect}"
