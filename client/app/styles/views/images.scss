@@ -10,13 +10,33 @@ section.images {
   }
 
   li {
-    @include span-columns(3);
-    @include omega(4n);
-
     position: relative;
-    width: 280px;
-    height: 280px;
+    width: 200px;
+    height: 200px;
     overflow: hidden;
-    background: #efe;
+    background: #f3f3f3;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    float: left;
+    margin: 0 20px 20px 0;
+    border: 1px solid #eee;
+    @include box-sizing( border-box );
+
+    img {
+      display: none;
+    }
+
+    h2 {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ddd;
+      color: #666;
+      font-size: 1em;
+      font-weight: 400;
+      margin: 0;
+    }
   }
 }

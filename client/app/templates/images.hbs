@@ -2,21 +2,6 @@
 
 <ul class="images-list">
   {{#each image in newest}}
-    <li {{bind-attr class=":image-item image.currentState"}}>
-      {{#if image.thumbUrl}}
-        <img {{bind-attr src="image.thumbUrl"}}>
-      {{else}}
-        {{#if image.isInFailed}}
-          <button {{action "removeItem" image}}>
-            X {{! LOL sorry not sorry Jorge }}
-          </button>
-          {{error}}
-        {{else}}
-          {{ui-spinner}}
-          [{{image.wholeProgress}}%]
-          {{image.file.name}}
-        {{/if}}
-      {{/if}}
-    </li>
+    {{image-item tagName='li' image=image}}
   {{/each}}
 </ul>
