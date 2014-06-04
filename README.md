@@ -22,8 +22,8 @@ the upload process yourself.
 When it comes to file uploads, Ember is only a portion of the solution, we
 thought it was a good idea to provide an end-to-end implementation that
 demonstrates a real-world upload and processing workflow, not just Base64
-encoding form data and sending it along as a string in a JSON object -- don't
-do that.
+encoding form data and sending it along as a string in a JSON object &mdash;
+don't do that.
 
 ## [Server](server/)
 
@@ -35,12 +35,14 @@ tools we use on the server and what they do:
 * [Rails](http://rubyonrails.org) - Used for serving REST API that the Ember app consumes
 * [Sidekiq](http://sidekiq.org) - Multi-threaded worker queue, used for upload processing
 
-## S3
+## Integrations
+
+### S3
 
 S3 is used for storing the original file upload, it offloads the work from our
 servers and best of all by using this approach we get a redundant back-up of
 the original file. It's very cheap, and it supports resumable multi-part file
-uploads with CORS -- exactly what we need.
+uploads with CORS &mdash; exactly what we need.
 
 Alternatives: We've had success using
 [nginx-upload-module](https://github.com/vkholodkov/nginx-upload-module) with
@@ -52,7 +54,7 @@ promising. We really shy away from having file uploads go directly through the
 application stack, if you can use S3 or an alternative
 that promises the same functionality we think that is the best approach.
 
-## Pusher
+### Pusher
 
 Pusher provides a robust publish / subscribe messaging platform that we use to
 stream events to the client when uploads are processed. You could host
