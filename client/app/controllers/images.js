@@ -1,13 +1,13 @@
 export default Ember.ArrayController.extend({
   itemController: 'imageItem',
 
-  newest: Ember.computed.sort('@this.@each.createdAt', function(a, b) {
-    var dateA = a.get('createdAt').valueOf();
-    var dateB = b.get('createdAt').valueOf();
+  newest: Ember.computed.sort('@this.@each.sequence', function(a, b) {
+    var aSeq = a.get('sequence');
+    var bSeq = b.get('sequence');
 
-    if (dateA > dateB) {
+    if (aSeq > bSeq) {
       return -1;
-    } else if (dateA < dateB) {
+    } else if (aSeq < bSeq) {
       return 1;
     } else {
       return 0;
@@ -17,14 +17,15 @@ export default Ember.ArrayController.extend({
   actions: {
     addFiles: function(files) {
       files.forEach(function(file, i) {
-        var now   = new Date();
-        var image = this.store.createRecord('image', { createdAt: now });
+        var image = this.store.createRecord('image');
+        var seq   = new Date().valueOf() + i;
         var item;
 
         this.pushObject(image);
 
         item = this.get('lastObject');
         item.set('file', file);
+        item.set('sequence', seq);
         item.send('startUpload');
       }, this);
     },

@@ -10,6 +10,15 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
   hasUpload:       Ember.computed.bool('upload'),
   hasFile:         Ember.computed.bool('file'),
 
+  sequence: function(key, value) {
+    if (arguments.length === 1) {
+      var createdAt = this.get('createdAt');
+      return createdAt && createdAt.valueOf();
+    } else {
+      return value;
+    }
+  }.property(),
+
   wholeProgress: function() {
     var progress = this.get('progress');
 

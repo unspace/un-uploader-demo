@@ -21,9 +21,7 @@ class Api::V1::ImagesController < ApplicationController
 
   def image_params
     params.require(:image).permit(
-      :upload_key,
-      :created_at,
-      :id
+      :upload_key
     )
   end
 end
