@@ -3,6 +3,12 @@ export default Ember.Component.extend({
   classNameBindings: 'image.currentState',
   attributeBindings: 'style',
 
+  actions: {
+    removeItem: function(item) {
+      this.sendAction('removeItem', item);
+    }
+  },
+
   style: function() {
     var url = this.get('image.normalUrl');
 
