@@ -9,6 +9,25 @@ section.images {
     @include clearfix;
   }
 
+  aside {
+    position: fixed;
+    bottom: 10px;
+    width: 200px;
+    left: 20px;
+
+    p {
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+      padding: 0 8px;
+    }
+
+    .github-link a {
+      font-weight: bold;
+      color: $crimson;
+    }
+  }
+
   li {
     position: relative;
     width: 200px;

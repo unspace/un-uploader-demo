@@ -1,5 +1,14 @@
 {{file-picker label="Add Image" selected="addFiles" multiple=true}}
 
+<aside>
+  <p class="github-link">
+    <a href="https://github.com/unspace/un-uploader-demo">View on GitHub</a>
+  </p>
+  <p>
+    <em>Images are purged three hours after they are uploaded.</em>
+  </p>
+</aside>
+
 <ul class="images-list">
   {{#each image in newest}}
     {{image-item tagName="li" image=image error=error removeItem="removeItem"}}
