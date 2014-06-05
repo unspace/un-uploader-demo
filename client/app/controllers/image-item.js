@@ -13,11 +13,7 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
   sequence: function(key, value) {
     if (arguments.length === 1) {
       var createdAt = this.get('createdAt');
-      if (createdAt) {
-        return createdAt.valueOf();
-      } else {
-        return new Date().valueOf();
-      }
+      return createdAt ? createdAt.valueOf() : new Date().valueOf();
     } else {
       return value;
     }
