@@ -5,7 +5,7 @@ class ImageProcessor
   class InvalidError < Error; end
 
   CHANNEL   = 'images'
-  MAX_TRIES = 10
+  MAX_TRIES = 15
 
   ACCEPTED_MIMES = {
     jpg: 'image/jpeg',
@@ -64,8 +64,7 @@ class ImageProcessor
         raise MaxWaitError, 'Unable to find uploaded image'
       end
 
-      count += 1
-      sleep 1
+      sleep count += 1
       notify :try, count: count
 
       begin
