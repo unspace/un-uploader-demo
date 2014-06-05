@@ -19,16 +19,6 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
     }
   }.property('createdAt'),
 
-  wholeProgress: function() {
-    var progress = this.get('progress');
-
-    if (Ember.isNone(progress)) {
-      return;
-    }
-
-    return Math.round(progress * 100);
-  }.property('progress'),
-
   actions: {
     startUpload: function() {
       if (this.get('hasFile')) {
@@ -138,7 +128,7 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
           xhr.upload.addEventListener('progress', function(event) {
             Ember.run(function() {
               if (event.lengthComputable) {
-                controller.set('progress', (event.loaded / event.total));
+                controller.set('progress', (event.loaded / event.total) * 100);
               }
             });
           });
