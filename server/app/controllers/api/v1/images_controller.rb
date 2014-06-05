@@ -1,6 +1,6 @@
 class Api::V1::ImagesController < ApplicationController
   def index
-    render json: Image.processed.page(params[:page])
+    render json: Image.processed.newest.limit(100)
   end
 
   def show
