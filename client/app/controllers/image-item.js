@@ -17,7 +17,7 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
     } else {
       return value;
     }
-  }.property(),
+  }.property('createdAt'),
 
   wholeProgress: function() {
     var progress = this.get('progress');
