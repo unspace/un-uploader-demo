@@ -7,10 +7,8 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
   progress:        null,
   receivedPromise: null,
   error:           null,
-  isProcessed:     Ember.computed.equal('model.state', 'processed'),
   hasUpload:       Ember.computed.bool('upload'),
   hasFile:         Ember.computed.bool('file'),
-  canUpload:       Ember.computed.and('hasFile', 'hasUpload', 'isInitialized'),
 
   wholeProgress: function() {
     var progress = this.get('progress');
