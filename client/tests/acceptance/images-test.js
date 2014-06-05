@@ -23,6 +23,6 @@ module('Acceptances - Dataset', {
 
 test("Shows the file-picker", function(){
   expect(1);
-  var button = find('.ui-file-picker-button');
+  var button = find('.file-picker');
   equal(button.length, 1, 'no file-picker button');
 });
