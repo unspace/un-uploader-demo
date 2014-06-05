@@ -10,19 +10,13 @@ export default Ember.Component.extend({
   }.property('elementId'),
 
   didSelect: function(list) {
-    var files;
+    var files = [];
 
-    if (this.get('multiple')) {
-      files = [];
-
-      for (var i = 0; i < list.length; i++) {
-        files.push(list.item(i));
-      }
-
-      this.sendAction('selected', files);
-    } else {
-      this.sendAction('selected', list.item(0));
+    for (var i = 0; i < list.length; i++) {
+      files.push(list.item(i));
     }
+
+    this.sendAction('selected', files);
   },
 
   didInsertElement: function() {
