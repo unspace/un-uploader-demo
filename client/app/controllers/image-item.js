@@ -13,11 +13,15 @@ export default Ember.ObjectController.extend(Ember.FSM.Stateful, {
   sequence: function(key, value) {
     if (arguments.length === 1) {
       var createdAt = this.get('createdAt');
-      return createdAt && createdAt.valueOf();
+      if (createdAt) {
+        return createdAt.valueOf();
+      } else {
+        return new Date().valueOf();
+      }
     } else {
       return value;
     }
-  }.property('createdAt'),
+  }.property(),
 
   actions: {
     startUpload: function() {
