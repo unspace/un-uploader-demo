@@ -1,15 +1,15 @@
 {{#if image.thumbUrl}}
   <img {{bind-attr src="image.thumbUrl"}}>
 {{else}}
-  {{#if image.isInFailed}}
+  {{#if error}}
     <button {{action "removeItem" image}}>
-      &times; {{! LOL sorry not sorry Jorge }}
+      &times;
     </button>
-    {{#if error}}
-      <h2>{{error}}</h2>
-    {{/if}}
+    <h2>{{error}}</h2>
   {{else}}
+    {{#unless image.isInUploading}}
       {{progress-spinner}}
+    {{/unless}}
     <h2>{{image.file.name}}</h2>
     {{progress-bar progress=image.progress}}
   {{/if}}
