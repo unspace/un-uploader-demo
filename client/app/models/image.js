@@ -4,5 +4,5 @@ export default DS.Model.extend({
   thumbUrl:  DS.attr(),
   normalUrl: DS.attr(),
   largeUrl:  DS.attr(),
-  createdAt: DS.attr()
+  createdAt: DS.attr('date')
 });

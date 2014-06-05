@@ -2,48 +2,27 @@ export default Ember.ArrayController.extend({
   itemController: 'imageItem',
 
   newest: Ember.computed.sort('@this.@each.createdAt', function(a, b) {
-    if ( a.get('createdAt') > b.get('createdAt')) {
+    var dateA = a.get('createdAt').valueOf();
+    var dateB = b.get('createdAt').valueOf();
+
+    if (dateA > dateB) {
       return -1;
-    } else if (b.get('createdAt') === undefined || a.get('createdAt') < b.get('createdAt')) {
+    } else if (dateA < dateB) {
       return 1;
+    } else {
+      return 0;
     }
-
-    return 0;
   }),
-
-  bindEvent: function (event) {
-    var _this = this;
-    this.get('channel').bind(event, function(payload) {
-      Ember.run(function() {
-        var item = _this.findBy('id', payload.image_id);
-
-        if (item) {
-          Ember.sendEvent(item, event, [payload]);
-        } else if (event === 'processed') {
-          _this.store.find('image', payload.image_id);
-        }
-      });
-    });
-  },
-
-  _subscribePusher: function(){
-    var channel = this.pusher.subscribe('images');
-
-    this.set('channel', channel);
-
-    this.bindEvent('processing');
-    this.bindEvent('processed');
-    this.bindEvent('failed');
-  }.on('init'),
 
   actions: {
     addFiles: function(files) {
-      files.forEach(function(file) {
-        var image;
+      files.forEach(function(file, i) {
+        var now   = new Date();
+        var image = this.store.createRecord('image', { createdAt: now });
         var item;
 
-        image = this.store.createRecord('image');
         this.pushObject(image);
+
         item = this.get('lastObject');
         item.set('file', file);
         item.send('startUpload');
@@ -54,5 +33,34 @@ export default Ember.ArrayController.extend({
       item.unloadRecord();
       this.removeObject(item);
     }
-  }
+  },
+
+  _bindEvent: function(event, after) {
+    var controller = this;
+    var channel    = this.get('channel');
+
+    channel.bind(event, function(payload) {
+      Ember.run(function() {
+        var item = controller.findBy('id', payload.image_id);
+
+        if (item) {
+          Ember.sendEvent(item, event, [payload]);
+        }
+
+        if (after) {
+          after.call(controller, payload);
+        }
+      });
+    });
+  },
+
+  _subscribePusher: function() {
+    this.set('channel', this.pusher.subscribe('images'));
+
+    this._bindEvent('processing');
+    this._bindEvent('failed');
+    this._bindEvent('processed', function(payload) {
+      this.store.find('image', payload.image_id);
+    });
+  }.on('init')
 });
