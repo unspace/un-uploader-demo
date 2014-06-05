@@ -1,6 +1,6 @@
 export default Ember.Component.extend({
-  classNames:         ['ui-file-picker'],
-  classNameBindings:  ['disabled'],
+  classNames:         'file-picker',
+  classNameBindings:  'disabled',
   label:              'Choose Files',
   disabled:           false,
   multiple:           true,
