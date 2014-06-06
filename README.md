@@ -61,9 +61,8 @@ stream events to the client when uploads are processed. You could host
 your own pub/sub implementation using something like the iconic
 [Socket.io](http://socket.io) (Node), [Faye](http://faye.jcoglan.com/)
 (Node/Ruby), or a long-polling solution like Sam Saffron's
-[message_bus](https://github.com/SamSaffron/message_bus), or just do basic
-polling if that's how you roll. You have many options and you aren't locked
-into Pusher, but Pusher is really great.
+[message_bus](https://github.com/SamSaffron/message_bus). You have many options
+and you aren't locked into Pusher, but Pusher is really great.
 
 ## Future
 
