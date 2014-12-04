@@ -2,6 +2,9 @@
 
 An example full-stack file upload workflow for Ember applications.
 
+* [Slides](https://speakerdeck.com/ghedamat/un-uploader-demo)
+* [Demo](http://uploader.unspace.ca/images)
+
 ## Why?
 
 First, lets talk about the elephant in the room, why even manage all of this
